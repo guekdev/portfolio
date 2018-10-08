@@ -10,9 +10,9 @@ const Project = require('../../models/Project');
 // @access Public
 router.post('/', (req, res) => {
   const newProject = new Project({
-    name: req.body.newName,
-    info: req.body.newInfo,
-    url: req.body.newUrl
+    name: req.body.name,
+    info: req.body.info,
+    url: req.body.url
   });
 
   newProject.save(function(err, project) {
@@ -21,6 +21,16 @@ router.post('/', (req, res) => {
   })
 });
 
+
+// @route GET api/projects
+// @desc Read All Projects
+// @access Public
+router.get('/', (req, res) => {
+  Project.find()
+  .sort({date: -1})
+  .then(projects => res.status(200).json(projects))
+  .catch(err => res.status(500))
+});
 
 
 module.exports = router;
